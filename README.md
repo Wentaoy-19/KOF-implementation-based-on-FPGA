@@ -24,7 +24,7 @@ a)	Start screen
 
 In this game scene, we have a background image with the title on the game. When the users press “space” on the keyboard, the game will start and transit to the game scene. And whenever the user press the “reset” button on the DE2 board, the game will reset all state to the default state and back to this screen. 
 
-![image] 
+![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/082c9cd97252ab0201cdd705a5f206c85d2b4e79/image/image1.jpg) 
 
 b)	Game scene
 
