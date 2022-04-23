@@ -87,3 +87,70 @@ In our game, we have a background music in it. The music data is compressed by s
 
 ### Module description
 
+![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/image7.jpg)
+![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/image8.jpg)
+![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/image9.jpg)
+
+> Module: clk_0 
+		This is the clock source module that will generate clock signals used in all of other modules
+> Module: nios2_gen2_0 
+This is the NIOS-II processor serving as the central controller with the interface with other IO and modules and process the C codes we write. 
+> Module: onchip_memory2_0 
+This is the on chip memory module that can be used for storing data. In this lab, we mostly use it to hold the address of our modules. 
+> Module: sdram
+This module will allow us to access SDRAM on FPGA. 
+> Module: sdram_pll
+This module will generate the phase shift of the clock, so that it can provide a precise clock signal for the SDRAM to read and write data.
+> Module: sysid_qsys_0 
+This module is the system ID checker used for ensuring the compatibility between the hardware and software. 
+> Module: jtag_qsys_0 
+This allows for terminal access for use in software debugging. 
+> Module: keycode 0-5
+These are the keycodes delivered by the keyboard. 
+> Module: otg_hpi_address
+		This specifies the address for reading and writing value on the USB OTG chip.
+> Module: otg_hpi_r
+This is the control signal for reading value from OTG chip. 
+> Module: otg_hpi_w
+		This is the control signal for writing value to the USB OTG chip.
+> Module: otg_chip_cs
+This is the chip select control signal for the OTG chip 
+> Module: otg_hpi_reset
+		This is used to reset the state of the chip
+> Module: otg_hpi_data
+This is for the data connection between USB chip and FPGA. 
+
+### Written description of Software
+
+In our design, the software serves the same function as our lab8. That is to receive the keycode input from the keyboard. In the design of lab8, we use a 16-bit keycode to receive the input from the keyboard. Since a single keycode needs 8-btis, so it actually can receive 2 different keycodes. But in our design, since this is a game with two players, each has different keycodes to control the game characters. Therefore, we need to let the NIOS-II core to receive different keycode input at the same time. From the protocol our usb, it can only receive 6 keycodes at the same time. Therefore, we use six 8-bit keycodes to receive the input from the keyboard. The code is nearly the same as our lab8 code, as shown below: 
+ 
+ ![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/%E5%9B%BE%E7%89%8710.jpg)
+ 
+The keycodes will be passed through the PIO as the output to our design circuit. And these keycodes input in our top level will be wrap up through a key controller module to generate valid control signals to the character state machine. 
+
+### Design Statistic Table
+ 
+ ![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/image11.jpg)
+
+## Conclusion 
+
+### Functionality Discussion
+
+In our design, we generally achieve the function of the baseline in our proposal. That is, to achieve a basic fighting game framework. We have two players in the game, they have the basic actions like move, attack, defend and hurt. In each action, we achieve the animation to make it looks lively. Besides, some general game logic is also well designed, like the defense can used to against the attack from the other players, and the attack can interrupt the moving and stand state, etc. And we have HP bar to record the health point of each player, so we get the general functionality of a round of the game. Additionally, a background music is also added to our design to make our game lively. With some refine to the game state and some parameters, we achieve the baseline of our design. 
+
+The feature of our design is that. We achieve the basic framework of a fighting game, which looks very closer to the original game. Besides, we have very sophisticated background images and fluent animation in each action of our game characters, and the control to these animations is also quite fluent. We have well designed animation control state machine to make the transition of each action very fluent. Additionally, the UI with the HP bar is also very beautiful and like the original king of fighter game. And the background music added to the game also makes it much better. 
+
+However, due to the time limitation, there still exists some functions that we should achieve with more time. Firstly, the game of our baseline is not that fun, since each player only have attack and defense. This game logic is not complete. We can add more actions with animation to our game to make it better, like some more attack actions to break the defense from the other character. Or the skill with sophisticated animation that can cause huge damage to the other players. Additionally, the actions like jump and rolling can also be added to this game to make it more fun. Secondly, from now on we only achieve the background music. And with more time, we can add more sound effect accompanied with the action of the game to make it closer to the original KOF game. 
+
+### Problems and challenges we encountered
+
+In our design process, we encountered many bugs. Among all these problems, there are some problems and challenges that are quite representative.
+
+To begin with, the character state machine is a big challenge and also the core of our game. All our animations and character actions are based on the state machine. We firstly combine the state machine and the character drawing module together. However, we find that through this process, we module will be quite huge and not that easily to be understood. So, we redesign this part and divide the character drawing module and the character state machine. The state machine has some output signals that serves as the input signal to control our character drawing module. In that case, our design process becomes more fluent. 
+
+Secondly, after we load all the character animations and background images into the on-chip memory, we find that the image data are so large that is out of the capacity of the on-chip memory. Therefore, we compress all our images by resizing the images. And we change the codes of drawing so that it can double the size of images. So that we can draw all our images with less memory. 
+
+Lastly, the game logic design is also another challenge that we meet. Since the fighting game need to judge when the attack is valid, or in which situation the defense is successfully done. So, we write a independent module between the key input and the character state machine to better organize these input signals. With the logic designs, this module will send the final hurt/attack/defense signals to the state machine. So that it makes our design clearer and achieve the function. 
+
+### Final conclusions 
+In our final project, with the teamwork with the two of us, we achieve the street fighter game. In our design, we achieve basic fighting game framework of some basic actions like moving, attack, defense. In each of the action, we have animation with several frames to make it lively. We also have background music added to this game. In our design process, with encounter with several problems like the state machine design and the huge amount of image data. With hard work, we eventually figure out these problems and achieve our design. However, if we have more time, we can still add more game functionalities to our design. This FPGA based game design provide both of us the knowledge of the hardware design through FPGA and the knowledge of logic design, software-hardware interactions. We think it is a wonderful experiences in our study in ECE field.
