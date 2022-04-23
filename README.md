@@ -92,32 +92,59 @@ In our game, we have a background music in it. The music data is compressed by s
 ![image](https://github.com/HiracharleFranklin/KOF-implementation-based-on-FPGA/blob/dc7b63d026ce4a2d09de20204a6c434c8b6eb3cf/image/image9.jpg)
 
 > Module: clk_0 
+
 		This is the clock source module that will generate clock signals used in all of other modules
+		
 > Module: nios2_gen2_0 
+
 This is the NIOS-II processor serving as the central controller with the interface with other IO and modules and process the C codes we write. 
+
 > Module: onchip_memory2_0 
+
 This is the on chip memory module that can be used for storing data. In this lab, we mostly use it to hold the address of our modules. 
+
 > Module: sdram
+
 This module will allow us to access SDRAM on FPGA. 
+
 > Module: sdram_pll
+
 This module will generate the phase shift of the clock, so that it can provide a precise clock signal for the SDRAM to read and write data.
+
 > Module: sysid_qsys_0 
+
 This module is the system ID checker used for ensuring the compatibility between the hardware and software. 
+
 > Module: jtag_qsys_0 
+
 This allows for terminal access for use in software debugging. 
+
 > Module: keycode 0-5
+
 These are the keycodes delivered by the keyboard. 
+
 > Module: otg_hpi_address
-		This specifies the address for reading and writing value on the USB OTG chip.
+
+This specifies the address for reading and writing value on the USB OTG chip.
+
 > Module: otg_hpi_r
+
 This is the control signal for reading value from OTG chip. 
+
 > Module: otg_hpi_w
-		This is the control signal for writing value to the USB OTG chip.
+
+This is the control signal for writing value to the USB OTG chip.
+
 > Module: otg_chip_cs
+
 This is the chip select control signal for the OTG chip 
+
 > Module: otg_hpi_reset
-		This is used to reset the state of the chip
+
+This is used to reset the state of the chip
+
 > Module: otg_hpi_data
+
 This is for the data connection between USB chip and FPGA. 
 
 ### Written description of Software
