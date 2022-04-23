@@ -93,7 +93,7 @@ In our game, we have a background music in it. The music data is compressed by s
 
 > Module: clk_0 
 
-		This is the clock source module that will generate clock signals used in all of other modules
+This is the clock source module that will generate clock signals used in all of other modules
 		
 > Module: nios2_gen2_0 
 
